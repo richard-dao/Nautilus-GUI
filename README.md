@@ -29,24 +29,15 @@ To create the PVCs, run:
 
 To check that they were successfully created and running, you can do `kubectl get pvc` and look for the unique names of your PVC.
 
-## 3. Get the Turn Shared Secret from Nautilus Support
-
-*Update:* As of Aug 28th, I'm not sure if you need a turn secret anymore, but for security purposes, I think it's still best to get one.
-
-You'll need a turn secret in order to run the Nautilus GUI. You can ask for your turn secret from Nautilus Support by asking in the general channel of their Matrix channel here: https://app.element.io/#/room/#general:matrix.nrp-nautilus.io
-
-You may need to make a Matrix account. They'll DM you your unique turn secret so check back frequently. (**Note:** They can sometimes take a fair amount of time to respond to you or miss your message entirely. If they don't message you within a few days, feel free to ping them again)
-
-## 4. Create Your Secret
+## 3. Create Your Secret
 
 Kubernetes Secrets are dictionaries that hold your sensitive information as reference in the namespace. They are encrypted and allow you to lock your containers as needed. 
 
 Please run: 
 
-`kubectl create secret generic [my-pass] --from-literal=[my-password]=[YOUR_PASSWORD] --from-literal=[turn-secret]=[TURN_SHARED_SECRET_FROM_NAUTILUS]`
+`kubectl create secret generic [my-pass] --from-literal=[my-password]=[YOUR_PASSWORD]`
 
 - Ensure that you use a unique name for `my-pass` as you cannot have the same Secret name as someone else in the namespace
-- Replace `YOUR_PASSWORD` and `TURN_SHARED_SECRET_FROM_NAUTILUS` with whatever password you'd like and the turn-secret from Nautilus Support respectively
 - Do **not** include the square brackets when you type your command out
 
 This is an idea of how your secret is formatted.
@@ -55,14 +46,12 @@ This is an idea of how your secret is formatted.
     my-pass: 
         my-password: 
             YOUR_PASSWORD: ****
-        turn-secret:
-            TURN_SHARED_SECRET_FROM_NAUTILUS: **********************
 }
 ```
 
-Of the 5 things in square brackets, you are **required** to change 3 things: `my-pass`, `YOUR_PASSWORD`, and `TURN_SHARED_SECRET_FROM_NAUTILUS`. It is recommended you change `my-password` and `turn-secret` as well, but not required.  
+Of the 3 things in square brackets, you are **required** to change 2 things: `my-pass` and `YOUR_PASSWORD`. It is recommended you change `my-password` but it is not required.  
 
-## 5. Editing the Pod GUI File
+## 4. Editing the Pod GUI File
 
 The other yaml file in this repository, `xgl.yaml`, is the actual Pod that will be running the GUI desktop. When you are ready, you can try running a Deployment version of it (you'll need to add a few more options not covered in this guide).
 
@@ -74,23 +63,23 @@ To get the Pod working you'll first need to make a couple changes to the file:
 - Change the value of claimName to your cache PVC name on line 91
 - Change the value of claimName to your storage PVC name on line 94
 
-## 6. Run the Pod
+## 5. Run the Pod
 `kubectl create -f [your-xgl-filename].yaml`
 
-## 7. Check for Errors
+## 6. Check for Errors
 Check pod status using `kubectl get pods`
 If you face any issues that occur regarding your pod, check and debug using this command `kubectl describe pod [pod-name]`
 
-## 8. Port-forward the Pod
+## 7. Port-forward the Pod
 Run - `kubectl port-forward pod/[pod-name] 8080:8080`
 <br />You should see an output that looks like this: `Forwarding from 127.0.0.1:8080 -> 8080`
 <br />Copy and paste `127.0.0.1:8080` into your web browser 
 
 *Make sure to run this command in your local terminal where you have access to a web browser*
 
-## 9. Localhost page 
+## 8. Localhost page 
 The page should prompt you to enter the username which is "ubuntu" and the password you set (`YOUR_PASSWORD`) in your Nautilus Secret.
 
-## 10. You're Done!
+## 9. You're Done!
 
 Note that this dockerimage does not have the latest version of a lot of things built into the terminal, so you may need to run a couple commands like `sudo apt update`.
