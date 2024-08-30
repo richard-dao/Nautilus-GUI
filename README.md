@@ -16,7 +16,7 @@ You'll also need to be added to the AIEA namespace. If your not in the AIEA lab 
 
 ## 2. Creating the Persistent Volume Claims (PVC)
 
-*Update:* As of Aug 14th, 2024, Nautilus no longer supports seaweedfs-storage-nvme for the `storageClassName`. If you have previous PVCs with seaweedfs, they are unforunately now corrupted and no longer accessible. You'll need to change over to another sotrageClassName. `rook-cephfs-pacific` is recommended.
+*Update:* As of Aug 14th, 2024, Nautilus no longer supports seaweedfs-storage-nvme for the `storageClassName`. If you have previous PVCs with seaweedfs, they are unfortunately now corrupted and no longer accessible. You'll need to change over to another storageClassName. `rook-cephfs-pacific` is recommended.
 
 For the Nautilus GUI, you'll need 2 PVCs, a cache and a storage. If this is your first time, you can download the files `xgl-cache.yaml` and `rook-storage.yaml` that are provided in this repository. 
 
@@ -39,7 +39,7 @@ You may need to make a Matrix account. They'll DM you your unique turn secret so
 
 ## 4. Create Your Secret
 
-Kubernetes Secrets are python dictionaries that hold your sensitive information as reference in the namespace. They are encrypted and allow you to lock your containers as needed. 
+Kubernetes Secrets are dictionaries that hold your sensitive information as reference in the namespace. They are encrypted and allow you to lock your containers as needed. 
 
 Please run: 
 
@@ -64,7 +64,7 @@ Of the 5 things in square brackets, you are **required** to change 3 things: `my
 
 ## 5. Editing the Pod GUI File
 
-The other yaml file in this repository, `xgl.yaml`, is the actual Pod that will be running the GUI desktop. When you are ready, you can try running a Deployment version of it (you'll need to a few more options not covered in this guide).
+The other yaml file in this repository, `xgl.yaml`, is the actual Pod that will be running the GUI desktop. When you are ready, you can try running a Deployment version of it (you'll need to add a few more options not covered in this guide).
 
 To get the Pod working you'll first need to make a couple changes to the file:
 
