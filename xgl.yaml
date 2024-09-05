@@ -75,7 +75,7 @@ spec:
       name: dshm
     - mountPath: /cache
       name: xgl-cache-vol
-    - mountPath: /mnt/persistent
+    - mountPath: /home/ubuntu/persistent
       name: xgl-root-vol
   dnsPolicy: None
   dnsConfig:
